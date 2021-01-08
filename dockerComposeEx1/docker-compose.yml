@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  drupal:
+    image: drupal:9-apache
+    ports:
+      - '8080:80'
+    volumes:
+      -  drupalcontent/modules:/var/www/html/modules
+      -  drupalcontent/profiles:/var/www/html/profiles
+      -  drupalcontent/sites:/var/www/html/sites
+      -  drupalcontent/themes:/var/www/html/themes
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=drupal
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=foofoo123
+    volumes:
+      - drupaldb:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+volumes:
+  drupaldb:
+  drupalcontent:
